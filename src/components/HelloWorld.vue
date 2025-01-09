@@ -52,6 +52,7 @@ const difficultyButtons = ref<{
   text: "Hard"
 }]);
 const gameStart = ref<boolean>(false);
+const gameEnd = ref<boolean>(false);
 const gameWin = ref<boolean>(false);
 const selectedColorIndex = ref<number | null>(null);
 const countMatchRef = ref<number>(0);
@@ -121,17 +122,20 @@ function hideToaster(){
 }
 
 function winMatchAction(){
- gameWin.value = true;
- showToaster();
+  gameWin.value = true;
+  gameEnd.value = true;
+  showToaster();
 }
 
 function loseMatchAction(){
   gameWin.value = false;
+  gameEnd.value = true;
   showToaster();
 }
 
 function retryGame(){
   gameStart.value = false;
+  gameEnd.value = false;
   gameWin.value = false;
   countMatchRef.value = 0;
   hideToaster();
@@ -179,7 +183,9 @@ function retryGame(){
         <div class="col-auto px-2" v-for="(color, index) in colorArray" :key="index">
           <button class="btn btn-link fs-1 p-0" aria-label="Colored Trophy">
             <i class="bi bi-trophy position-absolute text-dark"></i>
-            <i class="bi bi-trophy-fill text-dark" :style="{ color: color }"></i>
+            <i class="bi bi-trophy-fill" :style="{ color: color }"
+              :class="{'text-dark': !gameEnd}"
+            ></i>
           </button>
         </div>
       </div>
