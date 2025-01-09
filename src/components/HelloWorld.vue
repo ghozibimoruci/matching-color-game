@@ -151,7 +151,7 @@ function retryGame(){
       <div class="col-9">
         <div class="row justify-content-between">
           <div v-for="(level, index) in difficultyButtons" :key="index" class="col-auto">
-            <button class="btn btn-primary" @click="onClickLevel(level.value)">{{ level.text }}</button>
+            <button class="btn btn-secondary" @click="onClickLevel(level.value)">{{ level.text }}</button>
           </div>
         </div>
       </div>
@@ -170,7 +170,7 @@ function retryGame(){
       <div class="row justify-content-center">
         <div class="col-auto px-2" v-for="(color, index) in colorToMatchArray" :key="index">
           <button class="btn btn-link fs-1 p-0" aria-label="Colored Trophy" @click="swicthColor(index)">
-            <i class="bi bi-trophy position-absolute" :class="[selectedColorIndex != null && index == selectedColorIndex ? '.text-primary-emphasis' : 'text-dark']"></i>
+            <i class="bi bi-trophy position-absolute" :class="[selectedColorIndex != null && index == selectedColorIndex ? 'text-warning-emphasis' : 'text-dark']"></i>
             <i class="bi bi-trophy-fill" :style="{ color: color }"></i>
           </button>
         </div>
@@ -187,22 +187,22 @@ function retryGame(){
   </div>
   <div class="toast-container position-fixed bottom-50 end-50 p-3">
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
+      <div class="toast-header text-bg-primary">
         <strong class="me-auto">
           {{
             gameWin?'Congratulation':'Unfortunately'
           }}
         </strong>
       </div>
-      <div class="toast-body">
+      <div class="toast-body text-bg-primary">
         <div class="row justify-content-center">
           <div class="col-12">
             {{
               gameWin?'You win the game. Wanna win another?':'You lose the game. Wanna try again?'
             }}
           </div>
-          <div class="col-auto">
-            <button class="btn btn-primary" @click="retryGame()">LETSGO</button>
+          <div class="col-auto pt-4">
+            <button class="btn btn-secondary" @click="retryGame()">LETSGO</button>
           </div>
         </div>
       </div>
