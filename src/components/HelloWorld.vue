@@ -6,7 +6,7 @@ const easyColors = [
   '#FFC300', // Vivid Yellow
   '#DAF7A6', // Light Green
   '#C70039', // Crimson
-  '#900C3F'  // Dark Magenta
+  '#021EF2'  // Blue Overdose
 ];
 
 // Medium (8 colors)
@@ -31,7 +31,7 @@ const hardColors = [
   '#581845', // Deep Purple
   '#2ECC71', // Emerald Green
   '#3498DB', // Bright Blue
-  '#F1C40F', // Vivid Gold
+  '#8D00D9', // Dark Violet
   '#E67E22', // Carrot Orange
   '#E74C3C', // Bright Red
   '#95A5A6'  // Grayish
@@ -144,41 +144,51 @@ function retryGame(){
 
 <template>
   <div class="container py-5">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-5">
       <div class="col-auto mb-4">
-        <h4 class="w-auto mb-0">
+        <h1 class="w-auto mb-0">
           Matching Color Game
-        </h4>
+        </h1>
       </div>
     </div>
     <div class="row justify-content-center" v-if="!gameStart">
       <div class="col-9">
         <div class="row justify-content-between">
           <div v-for="(level, index) in difficultyButtons" :key="index" class="col-auto">
-            <button class="btn btn-secondary" @click="onClickLevel(level.value)">{{ level.text }}</button>
+            <button class="btn btn-primary" @click="onClickLevel(level.value)">{{ level.text }}</button>
           </div>
         </div>
       </div>
     </div>
     <div class="game-panel" v-if="gameStart">
-      <div class="row justify-content-center" v-if="!gameWin">
+      <!-- TIMERS START -->
+      <div class="row justify-content-center mb-5" v-if="!gameWin">
         <div class="col-auto">
           <Timer @timer-end="loseMatchAction" initialTime="120" />
         </div>
       </div>
-      <div class="row justify-content-center">
+      <!-- TIMERS END -->
+
+      <!-- COUNT MATCH START -->
+      <div class="row justify-content-center mb-3">
         <div class="col-auto">
-          {{ countMatchRef }}
+          <h3>Color Match : {{ countMatchRef }}</h3>
         </div>
       </div>
+      <!-- COUNT MATCH END -->
+
+      <!-- ARRAY TO MATCH START -->
       <div class="row justify-content-center">
         <div class="col-auto px-2" v-for="(color, index) in colorToMatchArray" :key="index">
           <button class="btn btn-link fs-1 p-0" aria-label="Colored Trophy" @click="swicthColor(index)">
-            <i class="bi bi-trophy position-absolute" :class="[selectedColorIndex != null && index == selectedColorIndex ? 'text-warning-emphasis' : 'text-dark']"></i>
+            <i class="bi bi-trophy position-absolute" :class="[selectedColorIndex != null && index == selectedColorIndex ? 'text-primary select-shadow' : 'text-dark']"></i>
             <i class="bi bi-trophy-fill" :style="{ color: color }"></i>
           </button>
         </div>
       </div>
+      <!-- ARRAY TO MATCH END -->
+
+      <!-- CORRECT ARRAY START -->
       <div class="row justify-content-center">
         <div class="col-auto px-2" v-for="(color, index) in colorArray" :key="index">
           <button class="btn btn-link fs-1 p-0" aria-label="Colored Trophy">
@@ -189,18 +199,19 @@ function retryGame(){
           </button>
         </div>
       </div>
+      <!-- CORRECT ARRAY END -->
     </div>
   </div>
   <div class="toast-container position-fixed bottom-50 end-50 p-3">
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header text-bg-primary">
+      <div class="toast-header text-bg-light">
         <strong class="me-auto">
           {{
             gameWin?'Congratulation':'Unfortunately'
           }}
         </strong>
       </div>
-      <div class="toast-body text-bg-primary">
+      <div class="toast-body text-bg-light">
         <div class="row justify-content-center">
           <div class="col-12">
             {{
@@ -208,7 +219,7 @@ function retryGame(){
             }}
           </div>
           <div class="col-auto pt-4">
-            <button class="btn btn-secondary" @click="retryGame()">LETSGO</button>
+            <button class="btn btn-primary" @click="retryGame()">LETSGO</button>
           </div>
         </div>
       </div>
@@ -222,5 +233,8 @@ function retryGame(){
   bottom: 50%;
   right: 50%;
   transform: translate(50%, 50%);
+}
+.select-shadow {
+  filter: drop-shadow(0px 0px 4px var(--bs-primary));
 }
 </style>
